@@ -7,38 +7,28 @@ on:
     inputs:
 
       debian-ref:
-        description: The debian ref to build. For example branch "debian/latest" or tag "debian/1.0.0-1"
+        description: The debian ref to build. For example branch "debian/qcom-next" or tag "debian/1.0.0-1"
         type: string
         required: true
-        default: debian/latest
+        default: debian/qcom-next
 
-      distro-codename:
-        description: The distribution codename to build for. Ex noble, questing, etc
+      suite:
+        description: The distribution codename or Debian suite to build for. Ex noble, questing, resolute, trixie, sid, unstable
         type: choice
-        default: noble
+        default: unstable
         options:
           - noble
           - questing
-
-      abi-checker:
-        description: Run the ABI checker or not
-        type: boolean
-        default: false
-
-      push-to-repo:
-        description: Push to repository upon successful build
-        type: boolean
-        default: false
-
-      builder_runner:
-        type: choice
-        default: ubuntu-latest
-        options:
-          - ubuntu-latest
-          - lecore-prd-u2404-arm64-xlrg-od-ephem
+          - resolute
+          - unstable
+          - forky
+          - trixie
+          - bookworm
+          - sid
 
 permissions:
   contents: read
+  packages: read
 
 jobs:
   build:
@@ -46,9 +36,5 @@ jobs:
     with:
       qcom-build-utils-ref: main
       debian-ref: ${{ inputs.debian-ref }}
-      distro-codename: ${{ inputs.distro-codename }}
-      run-abi-checker: ${{ inputs.abi-checker }}
-      is-post-merge: ${{ inputs.push-to-repo }}
-      runner: ${{inputs.builder_runner}}
-    secrets:
-      TOKEN: ${{ secrets.DEB_PKG_BOT_CI_TOKEN }}
+      suite: ${{ inputs.suite }}
+      debusine-parent-workspace: ${{ vars.DEBUSINE_PARENT_WORKSPACE }}
