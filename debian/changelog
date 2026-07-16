@@ -1,8 +1,50 @@
+qti-camera-service (1.0.5-0qcom1~) UNRELEASED; urgency=medium
+
+  * Backport from debian/latest
+
+ -- Bala Sai Kosuri <bkosuri@qti.qualcomm.com>  Thu, 06 Aug 2026 07:15:21 +0000
+
 qcom-camera-server (1.0.4-0qcom2~) UNRELEASED; urgency=medium
 
   * WIP — update changelog before next release
 
- -- Bala Sai Kosuri <bkosuri@qti.qualcomm.com>  Thu, 06 Aug 2026 07:15:21 +0000
+ -- Debusine Action Bot <noreply@bot.invalid>  Thu, 20 Aug 2026 12:59:48 +0000
+
+qti-camera-service (1.0.5-0qli1) forky; urgency=medium
+
+  [ Agathe Porte ]
+  * New upstream release
+  * Drop upstreamed patches
+  * Rename srcpkg qcom-camera-server to qti-camera-service
+  * Rename binpkg qcom-camera-server to qti-camera-server
+  * d/rules: allow for binary-indep to succeed without cmake
+
+ -- Debusine Action Bot <noreply@bot.invalid>  Thu, 20 Aug 2026 12:55:20 +0000
+
+qcom-camera-server (1.0.4-0qli1) forky; urgency=medium
+
+  [ Agathe Porte ]
+  * Initial upload to QLI
+  * use B-D-A
+  * do not install systemd files in /lib
+  * d/rules: drop trailing whitespace
+  * wrap-and-sort -sat
+  * drop obsolete Rules-Requires-Root: no
+  * drop repeated section
+  * drop obsolete priority field
+  * change section to contrib/*
+  * d/copyright: add missing license
+  * add missing soversion to pkg names
+  * rename libqmmf-client1 to libqmmf-recorder-client1
+  * install check-camx-overlay.sh to libexec
+  * d/rules: enable hardening
+  * bump Standards-Version to 4.7.4 (no changes needed)
+  * make myself maintainer for QLI
+  * Add patch for missing documentation in systemd service
+  * Add d/watch
+
+ -- Debusine Action Bot <noreply@bot.invalid>  Thu, 13 Aug 2026 09:44:32 +0000
+>>>>>>> upstream/qli/debian/latest
 
 qcom-camera-server (1.0.4-0qcom1) resolute; urgency=medium
 
