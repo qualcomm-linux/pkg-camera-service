@@ -1,0 +1,85 @@
+Source: qcom-camera-server
+Section: libs
+Priority: optional
+Maintainer: Bala Sai Kosuri <bkosuri@qti.qualcomm.com>
+Rules-Requires-Root: no
+Build-Depends:
+ debhelper-compat (= 13),
+ cmake,
+ libglib2.0-dev,
+ libcamx-dev,
+ protobuf-compiler,
+ libprotobuf-dev,
+Standards-Version: 4.6.2
+Homepage: https://github.com/qualcomm/camera-service
+
+Package: libqmmf-common
+Section: libs
+Architecture: arm64
+Depends:
+ ${shlibs:Depends},
+ ${misc:Depends},
+Description: Qualcomm MultiMedia Framework - common runtime libraries
+ The Qualcomm MultiMedia Framework (QMMF) provides the camera recorder
+ service and client stack used by Qualcomm Linux camera pipelines.
+ This package contains the shared runtime libraries common to both the
+ client and the server: the protocol buffer bindings, generic utilities,
+ the configuration parser and the camera-metadata helpers
+ (libqmmf_proto, libqmmf_utils, libqmmf_config and
+ libqmmf_camera_metadata).
+
+Package: libqmmf-client
+Section: libs
+Architecture: arm64
+Depends:
+ ${shlibs:Depends},
+ ${misc:Depends},
+Description: Qualcomm MultiMedia Framework - client runtime library
+ The Qualcomm MultiMedia Framework (QMMF) provides the camera recorder
+ service and client stack used by Qualcomm Linux camera pipelines.
+ This package contains the recorder client shared library
+ (libqmmf_recorder_client), which applications link against to talk to
+ the camera server.
+
+Package: libqmmf-server-lib
+Section: libs
+Architecture: arm64
+Depends:
+ ${shlibs:Depends},
+ ${misc:Depends},
+Description: Qualcomm MultiMedia Framework - server runtime libraries
+ The Qualcomm MultiMedia Framework (QMMF) provides the camera recorder
+ service and client stack used by Qualcomm Linux camera pipelines.
+ This package contains the server-side shared libraries used by the
+ camera server: the camera adaptor, the memory interface and the
+ recorder service, including their platform variants (for example the
+ kodiak build of each library).
+
+Package: libqmmf-dev
+Section: libdevel
+Architecture: arm64
+Depends:
+ libqmmf-common (= ${binary:Version}),
+ libqmmf-client (= ${binary:Version}),
+ libqmmf-server-lib (= ${binary:Version}),
+ ${misc:Depends},
+Description: Qualcomm MultiMedia Framework - development files
+ The Qualcomm MultiMedia Framework (QMMF) provides the camera recorder
+ service and client stack used by Qualcomm Linux camera pipelines.
+ This package contains the public headers, the pkg-config files and the
+ unversioned shared-library development symlinks needed to build software
+ against QMMF, such as the Qualcomm GStreamer camera plugins.
+
+Package: qcom-camera-server
+Section: video
+Architecture: arm64
+Depends:
+ libqmmf-server-lib (= ${binary:Version}),
+ ${shlibs:Depends},
+ ${misc:Depends},
+Description: Qualcomm Linux embedded camera server
+ The Qualcomm MultiMedia Framework (QMMF) provides the camera recorder
+ service and client stack used by Qualcomm Linux camera pipelines.
+ This package contains the cam-server daemon, its systemd service unit,
+ configuration files and helper scripts that expose the camera hardware
+ to QMMF clients.
