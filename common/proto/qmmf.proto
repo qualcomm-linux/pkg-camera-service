@@ -1,0 +1,569 @@
+syntax = "proto3";
+
+// Events
+enum EventTypeMsg {
+  EVENT_UNKNOWN = 0;
+  EVENT_SERVERDIED = 1;
+  EVENT_CAMERAERROR = 2;
+  EVENT_CAMERAOPEN = 3;
+  EVENT_CAMERACLOSING = 4;
+  EVENT_CAMERACLOSED = 5;
+  EVENT_FRAMEERROR = 6;
+  EVENT_METADATAERROR = 7;
+}
+
+// Buffer related
+enum BufferFormatMsg {
+  BUFFER_FORMAT_RGB = 0;
+  BUFFER_FORMAT_NV12 = 1;
+  BUFFER_FORMAT_NV12UBWC = 2;
+  BUFFER_FORMAT_NV21 = 3;
+  BUFFER_FORMAT_NV16 = 4;
+  BUFFER_FORMAT_YUY2 = 5;
+  BUFFER_FORMAT_UYVY = 6;
+  BUFFER_FORMAT_P010 = 7;
+  BUFFER_FORMAT_TP10UBWC = 8;
+  BUFFER_FORMAT_BLOB = 9;
+  BUFFER_FORMAT_RAW8 = 10;
+  BUFFER_FORMAT_RAW10 = 11;
+  BUFFER_FORMAT_RAW12 = 12;
+  BUFFER_FORMAT_RAW16 = 13;
+  BUFFER_FORMAT_UNSUPPORTED = 14;
+};
+
+message PlaneInfoMsg {
+  uint32 stride = 1;
+  uint32 scanline = 2;
+  uint32 width = 3;
+  uint32 height = 4;
+  uint32 offset = 5;
+  uint32 size = 6;
+}
+
+message BufferMetaMsg {
+  BufferFormatMsg format = 1;
+  uint32 n_planes = 2;
+  repeated PlaneInfoMsg info = 3;
+}
+
+message BufferInfoMsg {
+  int32 ion_fd = 1;
+  int32 ion_meta_fd = 2;
+  int32 img_id = 3;
+  uint32 size = 4;
+  uint64 timestamp = 5;
+  uint64 seqnum = 6;
+  uint32 buffer_id = 7;
+  uint64 flags = 8;
+  uint32 capacity = 9;
+}
+
+// Video Related
+enum VideoFormatMsg {
+  VIDEO_FORMAT_JPEG = 0;
+  VIDEO_FORMAT_RGB = 1;
+  VIDEO_FORMAT_NV12 = 2;
+  VIDEO_FORMAT_NV12UBWC = 3;
+  VIDEO_FORMAT_NV16 = 4;
+  VIDEO_FORMAT_YUY2 = 5;
+  VIDEO_FORMAT_UYVY = 6;
+  VIDEO_FORMAT_P010 = 7;
+  VIDEO_FORMAT_TP10UBWC = 8;
+  VIDEO_FORMAT_BAYERIDEAL = 9;
+  VIDEO_FORMAT_BAYERRDI8BIT = 10;
+  VIDEO_FORMAT_BAYERRDI10BIT = 11;
+  VIDEO_FORMAT_BAYERRDI12BIT = 12;
+  VIDEO_FORMAT_BAYERRDI16BIT = 13;
+}
+
+enum RotationMsg {
+  ROTATION_NONE = 0;
+  ROTATION_90 = 1;
+  ROTATION_180 = 2;
+  ROTATION_270 = 3;
+}
+
+enum VideoFlagsMsg {
+  VIDEO_FLAG_NONE = 0;
+  VIDEO_FLAG_IAEC = 1;
+  VIDEO_FLAG_UNCACHED = 2;
+  VIDEO_FLAG_PREVIEW = 3;
+}
+
+enum VIDEO_PARAM {
+  VIDEO_PARAM_FRAMERATE = 0;
+  VIDEO_PARAM_ENABLEFRAMEREPEAT = 1;
+}
+
+message VideoTrackParamMsg {
+  uint32 camera_id = 1;
+  uint32 width = 2;
+  uint32 height = 3;
+  float framerate = 4;
+  VideoFormatMsg format = 5;
+  RotationMsg rotation = 6;
+  uint32 xtrabufs = 7;
+  VideoFlagsMsg flags = 8;
+}
+
+// Image related
+enum ImageModeMsg {
+  IMAGE_MODE_SNAPSHOT = 0;
+  IMAGE_MODE_SNAPSHOTPLUSRAW = 1;
+  IMAGE_MODE_ZSL = 2;
+}
+
+enum ImageFormatMsg {
+  IMAGE_FORMAT_JPEG = 0;
+  IMAGE_FORMAT_NV12 = 1;
+  IMAGE_FORMAT_NV21 = 2;
+  IMAGE_FORMAT_BAYERIDEAL = 3;
+  IMAGE_FORMAT_BAYERRDI8BIT = 4;
+  IMAGE_FORMAT_BAYERRDI10BIT = 5;
+  IMAGE_FORMAT_BAYERRDI12BIT = 6;
+  IMAGE_FORMAT_BAYERRDI16BIT = 7;
+}
+
+// Offline Camera
+enum OfflinePostProcModeMsg {
+  OFFLINE_POSTPROC_YUV_TO_JPEG     = 0;
+  OFFLINE_POSTPROC_YUV_TO_YUV      = 1;
+  OFFLINE_POSTPROC_RAW_TO_YUV      = 2;
+  OFFLINE_POSTPROC_RAW_TO_JPEG_SBS = 3;
+}
+
+message OfflineCameraBufferParamsMsg {
+  uint32 width  = 1;
+  uint32 height = 2;
+  VideoFormatMsg format = 3;
+}
+
+message OfflineCameraInputParamsMsg {
+  repeated uint32 camera_id = 1;
+  uint32 width  = 2;
+  uint32 height = 3;
+}
+
+message OfflineCameraOutputParamsMsg {
+  uint32 size = 1;
+}
+
+message OfflineCameraCreateParamsMsg {
+  repeated uint32 camera_id = 1;
+  OfflineCameraBufferParamsMsg in_buffer = 2;
+  OfflineCameraBufferParamsMsg out_buffer = 3;
+  OfflinePostProcModeMsg process_mode = 4;
+  repeated uint32 metadata_step = 5;
+  repeated bytes request_metadata_path = 6;
+  repeated bytes session_meta = 7;
+}
+
+message OfflineCameraProcessParamsMsg {
+  repeated int32 in_buf_fd = 1;
+  int32 out_buf_fd = 2;
+  bytes meta = 3;
+}
+
+message GetOfflineCameraParamsReqMsg {
+  uint32 client_id = 1;
+  OfflineCameraInputParamsMsg in_params = 2;
+}
+
+message GetOfflineCameraParamsRespMsg {
+  uint32 status = 1;
+  OfflineCameraOutputParamsMsg out_params = 2;
+}
+
+// Create offline camera post-processing context
+message CreateOfflineCameraReqMsg {
+  uint32 client_id = 1;
+  OfflineCameraCreateParamsMsg params = 2;
+}
+
+// Run offline camera processing
+message ProcessOfflineCameraReqMsg {
+  uint32 client_id = 1;
+  OfflineCameraProcessParamsMsg process_params = 2;
+}
+
+// Destroy offline camera post-processing context
+message DestroyOfflineCameraReqMsg {
+  uint32 client_id = 1;
+}
+
+message ImageParamMsg {
+  ImageModeMsg mode = 1;
+  uint32 width = 2;
+  uint32 height = 3;
+  ImageFormatMsg format = 4;
+  uint32 quality = 5;
+  RotationMsg rotation = 6;
+}
+
+// TODO: Extra param related (check if required)
+message ExtraParamMsg {
+  uint32 tag_id = 1;
+  uint32 entry_id = 2;
+  uint32 data_size = 3;
+}
+
+message ConnectRespMsg {
+  uint32 client_id = 1;
+}
+
+// CallbackSocketReady
+message CallbackSocketReadyMsg {
+  uint32 client_id = 1;
+}
+
+// Connect
+message DummyMsg {
+  uint32 dummy = 1;
+}
+
+// Disconnect
+message DisconnectReqMsg {
+  uint32 client_id = 1;
+}
+
+// StartCamera
+message StartCameraReqMsg {
+  uint32 client_id = 1;
+  uint32 camera_id = 2;
+  float framerate = 3;
+  bool enable_result_cb = 4;
+  bytes extra_params = 5;
+}
+
+// StopCamera
+message StopCameraReqMsg {
+  uint32 client_id = 1;
+  uint32 camera_id = 2;
+}
+
+// CreateVideoTrack
+message CreateVideoTrackReqMsg {
+  uint32 client_id = 1;
+  uint32 track_id = 2;
+  VideoTrackParamMsg video_params = 3;
+  bytes extra_params = 4;
+}
+
+// CreateVideoTrack
+message DeleteVideoTrackReqMsg {
+  uint32 client_id = 1;
+  uint32 track_id = 2;
+}
+
+// StartVideoTracks
+message StartVideoTracksReqMsg {
+  uint32 client_id = 1;
+  repeated uint32 id = 2;
+}
+
+// StopVideoTracks
+message StopVideoTracksReqMsg {
+  uint32 client_id = 1;
+  repeated uint32 id = 2;
+}
+
+// ReturnTrackBuffer
+message ReturnTrackBufferReqMsg {
+  uint32 client_id = 1;
+  uint32 track_id = 2;
+  repeated BufferInfoMsg buffers = 3;
+}
+
+// SetVideoTrackParam
+message SetVideoTrackParamReqMsg {
+  uint32 client_id = 1;
+  uint32 track_id = 2;
+  VIDEO_PARAM type = 3;
+  bytes param = 4;
+}
+
+// CaptureImage
+enum SNAPSHOT_TYPE {
+  SNAPSHOT_TYPE_STILL = 0;
+  SNAPSHOT_TYPE_STILLPLUSRAW = 1;
+  SNAPSHOT_TYPE_VIDEO = 2;
+  SNAPSHOT_TYPE_VIDEOPLUSRAW = 3;
+}
+
+message ImageGroup {
+  repeated uint32 pads = 1;
+}
+
+message DynamicCaptureImageReqMsg {
+  uint32 client_id = 1;
+  uint32 camera_id = 2;
+  repeated ImageGroup pad_groups = 3;
+  SNAPSHOT_TYPE type = 4;
+  uint32 n_burst = 5;
+  repeated bytes meta = 6;
+}
+
+message CaptureImageReqMsg {
+  uint32 client_id = 1;
+  uint32 camera_id = 2;
+  SNAPSHOT_TYPE type = 3;
+  uint32 n_images = 4;
+  repeated bytes meta = 5;
+}
+
+// ConfigImageCapture
+message ConfigImageCaptureReqMsg {
+  uint32 client_id = 1;
+  uint32 camera_id = 2;
+  uint32 image_id = 3;
+  ImageParamMsg image_param = 4;
+  bytes extra_param = 5;
+}
+
+// CancelCaptureImage
+message CancelCaptureImageReqMsg {
+  uint32 client_id = 1;
+  uint32 camera_id = 2;
+  uint32 image_id = 3;
+  bool cache = 4;
+}
+
+// ReturnImageCaptureBuffer
+message ReturnImageCaptureBufferReqMsg {
+  uint32 client_id = 1;
+  uint32 camera_id = 2;
+  uint32 buffer_id = 3;
+}
+
+// SetCameraParam
+message SetCameraParamReqMsg {
+  uint32 client_id = 1;
+  uint32 camera_id = 2;
+  bytes meta = 3;
+}
+
+// GetCameraParam
+message GetCameraParamReqMsg {
+  uint32 client_id = 1;
+  uint32 camera_id = 2;
+}
+
+// SetCameraSessionParam
+message SetCameraSessionParamReqMsg {
+  uint32 client_id = 1;
+  uint32 camera_id = 2;
+  bytes meta = 3;
+}
+
+message GetCameraParamRespMsg {
+  bytes meta = 1;
+}
+
+// SetVHDR
+message SetVHDRReqMsg {
+  uint32 client_id = 1;
+  uint32 camera_id = 2;
+  int32 mode = 3;
+}
+
+// GetDefaultCaptureParam
+message GetDefaultCaptureParamReqMsg {
+  uint32 client_id = 1;
+  uint32 camera_id = 2;
+}
+
+message GetDefaultCaptureParamRespMsg {
+  bytes meta = 1;
+}
+
+// GetCameraCharacteristics
+message GetCameraCharacteristicsReqMsg {
+  uint32 client_id = 1;
+  uint32 camera_id = 2;
+}
+
+message GetCameraCharacteristicsRespMsg {
+  bytes meta = 1;
+}
+
+// Get Camera Capabilities of each camera connected
+message GetCamStaticInfoReqMsg {
+  uint32 client_id = 1;
+}
+
+message GetCamStaticInfoRespMsg {
+  repeated bytes caps = 1;
+}
+
+// GetSupportedInterfaceVer
+message GetSupportedInterfaceVerRespMsg {
+    repeated string vers = 1;
+}
+
+// GetVendorTagDescriptor
+message GetVendorTagDescriptorRespMsg {
+  bytes descs = 2;
+}
+
+// Client to Server API messages
+enum RECORDER_SERVICE_CMDS {
+  RECORDER_UNKNOWN = 0;
+  RECORDER_CONNECT = 1;
+  RECORDER_DISCONNECT = 2;
+  RECORDER_START_CAMERA = 3;
+  RECORDER_STOP_CAMERA = 4;
+  RECORDER_CREATE_VIDEOTRACK = 5;
+  RECORDER_DELETE_VIDEOTRACK = 6;
+  RECORDER_START_VIDEOTRACKS = 7;
+  RECORDER_STOP_VIDEOTRACKS = 8;
+  RECORDER_RETURN_TRACKBUFFER = 9;
+  RECORDER_SET_VIDEOTRACK_PARAMS = 10;
+  RECORDER_CAPTURE_IMAGE = 11;
+  RECORDER_CONFIG_IMAGECAPTURE = 12;
+  RECORDER_CANCEL_IMAGECAPTURE = 13;
+  RECORDER_RETURN_IMAGECAPTURE_BUFFER = 14;
+  RECORDER_SET_CAMERA_PARAMS = 15;
+  RECORDER_GET_CAMERA_PARAMS = 16;
+  RECORDER_SET_CAMERA_SESSION_PARAMS = 17;
+  RECORDER_SET_VHDR = 18;
+  RECORDER_GET_DEFAULT_CAPTURE_PARAMS = 19;
+  RECORDER_GET_CAMERA_CHARACTERISTICS = 20;
+  RECORDER_GET_VENDOR_TAG_DESCRIPTOR = 21;
+  RECORDER_CALLBACK_SOCKET_READY = 22;
+  RECORDER_GET_CAMERA_STATIC_INFO = 23;
+  RECORDER_GET_SUPPORTED_INTERFACE_VER = 24;
+  RECORDER_GET_OFFLINE_CAMERA_PARAMS  = 25;
+  RECORDER_CREATE_OFFLINE_CAMERA      = 26;
+  RECORDER_PROCESS_OFFLINE_CAMERA     = 27;
+  RECORDER_DESTROY_OFFLINE_CAMERA     = 28;
+  RECORDER_DYNAMIC_CAPTURE_IMAGE = 29;
+  RECORDER_GET_FEATURE_CAPABILITIES = 30;
+}
+
+// GetFeatureCapabilities — compile-time camera feature support query
+message GetFeatureCapabilitiesReqMsg {
+  uint32 client_id = 1;
+}
+
+// One entry in the FeatureCapabilityMap
+message FeatureCapabilityEntryMsg {
+  int32 key  = 1;
+  int32 type = 2;
+  oneof value {
+    bool  bool_value  = 3;
+    int32 int_value   = 4;
+    float float_value = 5;
+  }
+}
+
+// Response carrying the full FeatureCapabilityMap
+message GetFeatureCapabilitiesRespMsg {
+  repeated FeatureCapabilityEntryMsg entries = 1;
+}
+
+message RecorderClientReqMsg {
+  RECORDER_SERVICE_CMDS command = 1;
+  oneof request {
+    DisconnectReqMsg disconnect = 2;
+    StartCameraReqMsg start_camera = 3;
+    StopCameraReqMsg stop_camera = 4;
+    CreateVideoTrackReqMsg create_video_track = 5;
+    DeleteVideoTrackReqMsg delete_video_track = 6;
+    StartVideoTracksReqMsg start_video_tracks = 7;
+    StopVideoTracksReqMsg stop_video_tracks = 8;
+    ReturnTrackBufferReqMsg return_track_buffer = 9;
+    SetVideoTrackParamReqMsg set_video_track_param = 10;
+    CaptureImageReqMsg capture_image = 11;
+    ConfigImageCaptureReqMsg config_image_capture = 12;
+    CancelCaptureImageReqMsg cancel_image_capture = 13;
+    ReturnImageCaptureBufferReqMsg return_image_capture_buffer = 14;
+    SetCameraParamReqMsg set_camera_param = 15;
+    GetCameraParamReqMsg get_camera_param = 16;
+    SetCameraSessionParamReqMsg set_camera_session_param = 17;
+    SetVHDRReqMsg set_vhdr = 18;
+    GetDefaultCaptureParamReqMsg get_default_capture_param = 19;
+    GetCameraCharacteristicsReqMsg get_camera_characteristics = 20;
+    CallbackSocketReadyMsg callback_socket_ready = 21;
+    DummyMsg dummy_msg = 22;
+    GetCamStaticInfoReqMsg get_cam_static_info = 23;
+    GetOfflineCameraParamsReqMsg get_offline_camera_params = 24;
+    CreateOfflineCameraReqMsg create_offline_camera = 25;
+    ProcessOfflineCameraReqMsg process_offline_camera = 26;
+    DestroyOfflineCameraReqMsg destroy_offline_camera = 27;
+    DynamicCaptureImageReqMsg dynamic_capture_image = 28;
+    GetFeatureCapabilitiesReqMsg get_feature_caps = 29;
+  }
+}
+
+message RecorderClientRespMsg {
+  RECORDER_SERVICE_CMDS command = 1;
+  uint32 status = 2;
+  oneof response {
+    ConnectRespMsg connect_resp = 3;
+    GetCameraParamRespMsg get_camera_param_resp = 4;
+    GetDefaultCaptureParamRespMsg get_default_capture_param_resp = 5;
+    GetCameraCharacteristicsRespMsg get_camera_characteristics_resp = 6;
+    GetVendorTagDescriptorRespMsg get_vendor_tag_descriptor_resp = 7;
+    DummyMsg dummy_msg = 8;
+    GetCamStaticInfoRespMsg get_cam_static_info_resp = 9;
+    GetSupportedInterfaceVerRespMsg get_supported_interface_ver_resp = 10;
+    GetOfflineCameraParamsRespMsg get_offline_camera_params_resp = 11;
+    GetFeatureCapabilitiesRespMsg get_feature_caps_resp = 12;
+  }
+}
+
+// Server to Client
+enum RECORDER_SERVICE_CB_CMDS {
+  RECORDER_NOTIFY_EVENT= 0;
+  RECORDER_NOTIFY_SNAPSHOT_DATA= 1;
+  RECORDER_NOTIFY_OFFLINE_CAMERA_DATA = 2;
+  RECORDER_NOTIFY_VIDEO_TRACK_DATA= 3;
+  RECORDER_NOTIFY_VIDEO_TRACK_EVENT= 4;
+  RECORDER_NOTIFY_CAMERA_RESULT= 5;
+};
+
+message NotifyRecorderEventMsg {
+  EventTypeMsg type = 1;
+  bytes event_msg = 2;
+}
+
+message NotifySnapshotDataMsg {
+  uint32 camera_id = 1;
+  uint32 img_count = 2;
+  BufferInfoMsg buffer = 3;
+  BufferMetaMsg meta = 4;
+}
+
+message NotifyVideoTrackDataMsg {
+  uint32 track_id = 1;
+  repeated BufferInfoMsg buffers = 2;
+  repeated BufferMetaMsg metas = 3;
+}
+
+message NotifyVideoTrackEventMsg {
+  uint32 track_id = 1;
+  EventTypeMsg type = 2;
+  string event_msg = 3;
+}
+
+message NotifyCameraResultMsg {
+  uint32 camera_id = 1;
+  bytes result_meta = 2;
+}
+
+message NotifyOfflineCameraDataMsg {
+  int32 buf_fd = 1;
+  uint32 encoded_size = 2;
+}
+
+message RecorderClientCallbacksAsync {
+  RECORDER_SERVICE_CB_CMDS cmd = 1;
+  oneof callback {
+    NotifyRecorderEventMsg recorder_event = 2;
+    NotifySnapshotDataMsg snapshot_data = 3;
+    NotifyOfflineCameraDataMsg offline_camera_data = 4;
+    NotifyVideoTrackDataMsg video_track_data = 5;
+    NotifyVideoTrackEventMsg video_track_event = 6;
+    NotifyCameraResultMsg camera_result = 7;
+  }
+}
