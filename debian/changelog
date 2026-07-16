@@ -1,0 +1,5 @@
+qcom-camera-server (1.0.2+) resolute; urgency=medium
+
+  * Initial release.
+
+ -- Bala Sai Kosuri <bkosuri@qti.qualcomm.com>  Mon, 13 Jul 2026 10:46:53 +0530
