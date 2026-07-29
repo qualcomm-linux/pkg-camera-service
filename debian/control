@@ -75,6 +75,7 @@ Section: video
 Architecture: arm64
 Depends:
  libqmmf-server-lib (= ${binary:Version}),
+ libcamx-glymur1,
  ${shlibs:Depends},
  ${misc:Depends},
 Description: Qualcomm Linux embedded camera server
