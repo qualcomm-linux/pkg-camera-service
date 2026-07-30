@@ -1,5 +1,6 @@
-qcom-camera-server (1.0.4-0qli+staging1~) UNRELEASED; urgency=medium
+qcom-camera-server (1.0.4-0qli+staging1) forky; urgency=medium
 
+  [ Bala Sai Kosuri ]
   * Initial release.
 
- -- Bala Sai Kosuri <bkosuri@qti.qualcomm.com>  Mon, 13 Jul 2026 10:46:53 +0530
+ -- Debusine Action GitHub Bot <noreply@bot.invalid>  Thu, 30 Jul 2026 11:56:47 +0000
