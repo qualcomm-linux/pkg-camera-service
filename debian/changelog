@@ -1,5 +1,6 @@
-qcom-camera-server (1.0.4-0qcom1) UNRELEASED; urgency=medium
+qcom-camera-server (1.0.4-0qcom1) resolute; urgency=medium
 
+  [ Bala Sai Kosuri ]
   * Initial release.
 
- -- Bala Sai Kosuri <bkosuri@qti.qualcomm.com>  Thu, 06 Aug 2026 11:05:02 +0530
+ -- GitHub Service Bot <githubservice@qti.qualcomm.com>  Thu, 06 Aug 2026 06:55:58 +0000
