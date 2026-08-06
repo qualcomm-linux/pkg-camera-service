@@ -1,3 +1,9 @@
+qcom-camera-server (1.0.4-0qcom2~) UNRELEASED; urgency=medium
+
+  * WIP — update changelog before next release
+
+ -- Bala Sai Kosuri <bkosuri@qti.qualcomm.com>  Thu, 06 Aug 2026 07:15:21 +0000
+
 qcom-camera-server (1.0.4-0qcom1) resolute; urgency=medium
 
   [ Bala Sai Kosuri ]
