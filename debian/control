@@ -1,5 +1,5 @@
 Source: qcom-camera-server
-Section: libs
+Section: contrib/libs
 Maintainer: Bala Sai Kosuri <bkosuri@qti.qualcomm.com>
 Build-Depends:
  debhelper-compat (= 13),
@@ -52,7 +52,7 @@ Description: Qualcomm MultiMedia Framework - server runtime libraries
  kodiak build of each library).
 
 Package: libqmmf-dev
-Section: libdevel
+Section: contrib/libdevel
 Architecture: arm64
 Depends:
  libqmmf-client (= ${binary:Version}),
@@ -67,7 +67,7 @@ Description: Qualcomm MultiMedia Framework - development files
  against QMMF, such as the Qualcomm GStreamer camera plugins.
 
 Package: qcom-camera-server
-Section: video
+Section: contrib/video
 Architecture: arm64
 Depends:
  libcamx-glymur1,

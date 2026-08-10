@@ -1,4 +1,6 @@
 Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Disclaimer:
+ Build-Depends on libcamx-dev, which is non-free.
 
 Files:
  *
