@@ -14,7 +14,6 @@ Standards-Version: 4.6.2
 Homepage: https://github.com/qualcomm/camera-service
 
 Package: libqmmf-common
-Section: libs
 Architecture: arm64
 Depends:
  ${misc:Depends},
@@ -29,7 +28,6 @@ Description: Qualcomm MultiMedia Framework - common runtime libraries
  libqmmf_camera_metadata).
 
 Package: libqmmf-client
-Section: libs
 Architecture: arm64
 Depends:
  ${misc:Depends},
@@ -42,7 +40,6 @@ Description: Qualcomm MultiMedia Framework - client runtime library
  the camera server.
 
 Package: libqmmf-server-lib
-Section: libs
 Architecture: arm64
 Depends:
  ${misc:Depends},
