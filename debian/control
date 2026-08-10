@@ -1,6 +1,5 @@
 Source: qcom-camera-server
 Section: libs
-Priority: optional
 Maintainer: Bala Sai Kosuri <bkosuri@qti.qualcomm.com>
 Build-Depends:
  debhelper-compat (= 13),
