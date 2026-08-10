@@ -26,7 +26,7 @@ Description: Qualcomm MultiMedia Framework - common runtime libraries
  (libqmmf_proto, libqmmf_utils, libqmmf_config and
  libqmmf_camera_metadata).
 
-Package: libqmmf-client1
+Package: libqmmf-recorder-client1
 Architecture: arm64
 Depends:
  ${misc:Depends},
@@ -55,7 +55,7 @@ Package: libqmmf-dev
 Section: contrib/libdevel
 Architecture: arm64
 Depends:
- libqmmf-client1 (= ${binary:Version}),
+ libqmmf-recorder-client1 (= ${binary:Version}),
  libqmmf-common1 (= ${binary:Version}),
  libqmmf-server-lib1 (= ${binary:Version}),
  ${misc:Depends},
