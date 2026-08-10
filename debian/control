@@ -5,6 +5,7 @@ Maintainer: Bala Sai Kosuri <bkosuri@qti.qualcomm.com>
 Rules-Requires-Root: no
 Build-Depends:
  debhelper-compat (= 13),
+Build-Depends-Arch:
  cmake,
  libglib2.0-dev,
  libcamx-dev,
