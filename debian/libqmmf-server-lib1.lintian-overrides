@@ -1,0 +1,5 @@
+# upstream does not provide copyright years
+copyright-without-copyright-notice
+
+# package provides many .so files, bundle them in a single package
+package-name-doesnt-match-sonames libqmmf-camera-adaptor-kodiak1 libqmmf-camera-adaptor1 libqmmf-memory-interface-kodiak1 libqmmf-memory-interface1 libqmmf-recorder-service-kodiak1 libqmmf-recorder-service1

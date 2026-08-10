@@ -1,0 +1,5 @@
+# upstream does not provide copyright years
+copyright-without-copyright-notice
+
+# package provides many .so files, bundle them in a single package
+package-name-doesnt-match-sonames libqmmf-camera-metadata1 libqmmf-config1 libqmmf-proto1 libqmmf-utils1
