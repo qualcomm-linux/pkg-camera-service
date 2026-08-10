@@ -7,10 +7,10 @@ Build-Depends:
  debhelper-compat (= 13),
 Build-Depends-Arch:
  cmake,
- libglib2.0-dev,
  libcamx-dev,
- protobuf-compiler,
+ libglib2.0-dev,
  libprotobuf-dev,
+ protobuf-compiler,
 Standards-Version: 4.6.2
 Homepage: https://github.com/qualcomm/camera-service
 
@@ -18,8 +18,8 @@ Package: libqmmf-common
 Section: libs
 Architecture: arm64
 Depends:
- ${shlibs:Depends},
  ${misc:Depends},
+ ${shlibs:Depends},
 Description: Qualcomm MultiMedia Framework - common runtime libraries
  The Qualcomm MultiMedia Framework (QMMF) provides the camera recorder
  service and client stack used by Qualcomm Linux camera pipelines.
@@ -33,8 +33,8 @@ Package: libqmmf-client
 Section: libs
 Architecture: arm64
 Depends:
- ${shlibs:Depends},
  ${misc:Depends},
+ ${shlibs:Depends},
 Description: Qualcomm MultiMedia Framework - client runtime library
  The Qualcomm MultiMedia Framework (QMMF) provides the camera recorder
  service and client stack used by Qualcomm Linux camera pipelines.
@@ -46,8 +46,8 @@ Package: libqmmf-server-lib
 Section: libs
 Architecture: arm64
 Depends:
- ${shlibs:Depends},
  ${misc:Depends},
+ ${shlibs:Depends},
 Description: Qualcomm MultiMedia Framework - server runtime libraries
  The Qualcomm MultiMedia Framework (QMMF) provides the camera recorder
  service and client stack used by Qualcomm Linux camera pipelines.
@@ -60,8 +60,8 @@ Package: libqmmf-dev
 Section: libdevel
 Architecture: arm64
 Depends:
- libqmmf-common (= ${binary:Version}),
  libqmmf-client (= ${binary:Version}),
+ libqmmf-common (= ${binary:Version}),
  libqmmf-server-lib (= ${binary:Version}),
  ${misc:Depends},
 Description: Qualcomm MultiMedia Framework - development files
@@ -75,10 +75,10 @@ Package: qcom-camera-server
 Section: video
 Architecture: arm64
 Depends:
- libqmmf-server-lib (= ${binary:Version}),
  libcamx-glymur1,
- ${shlibs:Depends},
+ libqmmf-server-lib (= ${binary:Version}),
  ${misc:Depends},
+ ${shlibs:Depends},
 Description: Qualcomm Linux embedded camera server
  The Qualcomm MultiMedia Framework (QMMF) provides the camera recorder
  service and client stack used by Qualcomm Linux camera pipelines.
