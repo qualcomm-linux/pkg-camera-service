@@ -3,3 +3,8 @@ copyright-without-copyright-notice
 
 # package provides many .so files, bundle them in a single package
 package-name-doesnt-match-sonames libqmmf-camera-adaptor-kodiak1 libqmmf-camera-adaptor1 libqmmf-memory-interface-kodiak1 libqmmf-memory-interface1 libqmmf-recorder-service-kodiak1 libqmmf-recorder-service1
+
+# Upstream does not seem to properly use visibility=hidden and manually
+# export a reduced set of symbols as explained here:
+# https://wiki.debian.org/UsingSymbolsFiles#Proper_visibility_for_C.2B-.2B-_symbols
+no-symbols-control-file
