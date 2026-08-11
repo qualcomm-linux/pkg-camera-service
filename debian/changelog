@@ -15,8 +15,11 @@ qcom-camera-server (1.0.4-0qli1~) UNRELEASED; urgency=medium
   * install check-camx-overlay.sh to libexec
   * d/rules: enable hardening
   * bump Standards-Version to 4.7.4 (no changes needed)
+  * make myself maintainer for QLI
+  * Add patch for missing documentation in systemd service
+  * Add d/watch
 
- -- Agathe Porte <agathe.porte@oss.qualcomm.com>  Mon, 10 Aug 2026 16:55:40 +0200
+ -- Agathe Porte <agathe.porte@oss.qualcomm.com>  Tue, 11 Aug 2026 17:06:26 +0200
 
 qcom-camera-server (1.0.4-0qli+staging1) forky; urgency=medium
 
