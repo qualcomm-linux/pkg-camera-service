@@ -1,5 +1,6 @@
-qcom-camera-server (1.0.4-0qli+staging2~) UNRELEASED; urgency=medium
+qcom-camera-server (1.0.4-0qli1~) UNRELEASED; urgency=medium
 
+  * Initial upload to QLI
   * use B-D-A
   * do not install systemd files in /lib
   * d/rules: drop trailing whitespace
