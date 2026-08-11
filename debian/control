@@ -70,10 +70,12 @@ Package: qcom-camera-server
 Section: contrib/video
 Architecture: arm64
 Depends:
- libcamx-glymur1,
  libqmmf-server-lib1 (= ${binary:Version}),
  ${misc:Depends},
  ${shlibs:Depends},
+Recommends:
+# dlopen
+ libcamx-glymur1,
 Description: Qualcomm Linux embedded camera server
  The Qualcomm MultiMedia Framework (QMMF) provides the camera recorder
  service and client stack used by Qualcomm Linux camera pipelines.
