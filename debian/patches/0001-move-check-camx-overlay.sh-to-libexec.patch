@@ -8,6 +8,7 @@ use-case, and should be moved into libexec instead.
 Use a subdirectory named after the binary package to avoid polluting the
 libexec root given this script has no prefix.
 
+Forwarded: https://github.com/qualcomm/camera-service/pull/25
 Signed-off-by: Agathe Porte <agathe.porte@oss.qualcomm.com>
 ---
  qmmf-server/CMakeLists.txt                     | 2 +-
