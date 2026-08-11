@@ -75,10 +75,20 @@ Depends:
  ${shlibs:Depends},
 Recommends:
 # dlopen
- camx-server-runtime-any,
+ camx-server-runtime-all | camx-server-runtime-any,
 Description: Qualcomm Linux embedded camera server
  The Qualcomm MultiMedia Framework (QMMF) provides the camera recorder
  service and client stack used by Qualcomm Linux camera pipelines.
  This package contains the cam-server daemon, its systemd service unit,
  configuration files and helper scripts that expose the camera hardware
  to QMMF clients.
+
+Package: camx-server-runtime-all
+Architecture: arm64
+Depends:
+ libcamx-glymur1,
+ libcamx-hamoa1,
+ ${misc:Depends},
+Description: Qualcomm CamX libraries for camera service (metapackage)
+ This package installs all of the available implementations for the CamX camera
+ service.
