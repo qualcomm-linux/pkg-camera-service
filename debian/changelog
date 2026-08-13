@@ -1,5 +1,6 @@
-qcom-camera-server (1.0.4-0qli1~) UNRELEASED; urgency=medium
+qcom-camera-server (1.0.4-0qli1) forky; urgency=medium
 
+  [ Agathe Porte ]
   * Initial upload to QLI
   * use B-D-A
   * do not install systemd files in /lib
@@ -19,7 +20,7 @@ qcom-camera-server (1.0.4-0qli1~) UNRELEASED; urgency=medium
   * Add patch for missing documentation in systemd service
   * Add d/watch
 
- -- Agathe Porte <agathe.porte@oss.qualcomm.com>  Tue, 11 Aug 2026 17:06:26 +0200
+ -- Debusine Action Bot <noreply@bot.invalid>  Thu, 13 Aug 2026 09:44:32 +0000
 
 qcom-camera-server (1.0.4-0qli+staging1) forky; urgency=medium
 
