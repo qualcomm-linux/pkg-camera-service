@@ -1,4 +1,4 @@
-Source: qcom-camera-server
+Source: qti-camera-service
 Section: contrib/libs
 Maintainer: Agathe Porte <agathe.porte@oss.qualcomm.com>
 Build-Depends:
