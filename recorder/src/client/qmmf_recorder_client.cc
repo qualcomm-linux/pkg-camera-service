@@ -2225,6 +2225,9 @@ void RecorderClient::ImportBuffer(int32_t fd, int32_t metafd,
     case BufferFormat::kNV12HEIF:
       format = GBM_FORMAT_NV12_HEIF;
       break;
+    case BufferFormat::kP010HEIF:
+      format = GBM_FORMAT_YCbCr_420_P010_512;
+      break;
     default:
       format = GBM_FORMAT_NOT_DEFIEND;
   }
@@ -3099,6 +3102,59 @@ class BpRecorderService: public BpInterface<IRecorderService> {
     return ret;
   }
 
+  status_t GetFeatureCapabilities(const uint32_t client_id,
+                                  FeatureCapabilityMap& capabilities) {
+    Parcel data, reply;
+    data.writeInterfaceToken(IRecorderService::getInterfaceDescriptor());
+    data.writeUint32(client_id);
+    remote()->transact(uint32_t(QMMF_RECORDER_SERVICE_CMDS::
+                                RECORDER_GET_FEATURE_CAPABILITIES), data, &reply);
+    auto ret = reply.readInt32();
+    if (NO_ERROR != ret) {
+      return ret;
+    }
+
+    uint32_t capabilities_size = 0;
+    reply.readUint32(&capabilities_size);
+    capabilities.clear();
+    for (uint32_t i = 0; i < capabilities_size; ++i) {
+      int32_t key_int = 0;
+      int32_t type_int = 0;
+      reply.readInt32(&key_int);
+      reply.readInt32(&type_int);
+
+      CameraFeatureCapability cap;
+      cap.type = static_cast<FeatureValueType>(type_int);
+      switch (cap.type) {
+        case TYPE_BOOL: {
+          int32_t value = 0;
+          reply.readInt32(&value);
+          cap.bool_value = (value != 0);
+          break;
+        }
+        case TYPE_INT32: {
+          int32_t value = 0;
+          reply.readInt32(&value);
+          cap.int_value = value;
+          break;
+        }
+        case TYPE_FLOAT: {
+          float value = 0.0f;
+          reply.readFloat(&value);
+          cap.float_value = value;
+          break;
+        }
+        default:
+          QMMF_ERROR("%s: Unsupported capability type(%d)", __func__, type_int);
+          return BAD_VALUE;
+      }
+
+      capabilities[static_cast<CameraFeatureKey>(key_int)] = cap;
+    }
+    return ret;
+
+  }
+
   status_t GetCameraCharacteristics(const uint32_t client_id,
                                     const uint32_t camera_id,
                                     CameraMetadata &meta) {
@@ -3790,7 +3846,7 @@ void RecorderServiceCallbackStub::ThreadLoop() {
       QMMF_ERROR("%s: recv failure %s", __func__, strerror(errno));
       break;
     } else if (bytes_read == 0) {
-      QMMF_ERROR("%s: connection closed", __func__);
+      QMMF_WARN("%s: connection closed", __func__);
       NotifyServerDeath();
       break;
     }
