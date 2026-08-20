@@ -2,8 +2,10 @@ qti-camera-service (1.0.5-0qli1~) UNRELEASED; urgency=medium
 
   * New upstream release
   * Drop upstreamed patches
+  * Rename srcpkg qcom-camera-server to qti-camera-service
+  * Rename binpkg qcom-camera-server to qti-camera-server
 
- -- Agathe Porte <agathe.porte@oss.qualcomm.com>  Thu, 20 Aug 2026 12:51:50 +0200
+ -- Agathe Porte <agathe.porte@oss.qualcomm.com>  Thu, 20 Aug 2026 14:29:08 +0200
 
 qcom-camera-server (1.0.4-0qli1) forky; urgency=medium
 
