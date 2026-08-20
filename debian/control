@@ -70,8 +70,8 @@ Package: qti-camera-server
 Section: contrib/video
 Architecture: arm64
 # upgrade path for previous QLI pkg
-Replaces: qcom-camera-server (<< 1.0.4~)
-Breaks: qcom-camera-server (<< 1.0.4~)
+Replaces: qcom-camera-server (<< 1.0.5~)
+Breaks: qcom-camera-server (<< 1.0.5~)
 Depends:
  libqmmf-server-lib1 (= ${binary:Version}),
  ${misc:Depends},
