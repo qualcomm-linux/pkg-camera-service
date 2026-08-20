@@ -4,8 +4,9 @@ qti-camera-service (1.0.5-0qli1~) UNRELEASED; urgency=medium
   * Drop upstreamed patches
   * Rename srcpkg qcom-camera-server to qti-camera-service
   * Rename binpkg qcom-camera-server to qti-camera-server
+  * d/rules: allow for binary-indep to succeed without cmake
 
- -- Agathe Porte <agathe.porte@oss.qualcomm.com>  Thu, 20 Aug 2026 14:29:08 +0200
+ -- Agathe Porte <agathe.porte@oss.qualcomm.com>  Thu, 20 Aug 2026 14:49:45 +0200
 
 qcom-camera-server (1.0.4-0qli1) forky; urgency=medium
 
