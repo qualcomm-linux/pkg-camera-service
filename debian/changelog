@@ -1,5 +1,6 @@
-qti-camera-service (1.0.5-0qcom1) UNRELEASED; urgency=medium
+qti-camera-service (1.0.5-0qcom1) resolute; urgency=medium
 
+  [ Bala Sai Kosuri ]
   [Bala Sai Kosuri]
   * New upstream release.
   * Backport packaging changes from debian/latest
@@ -7,7 +8,7 @@ qti-camera-service (1.0.5-0qcom1) UNRELEASED; urgency=medium
   * Rename binpkg qcom-camera-server to qti-camera-server
   * d/rules: allow for binary-indep to succeed without cmake
 
- -- Bala Sai Kosuri <bkosuri@qti.qualcomm.com>  Thu, 06 Aug 2026 07:15:21 +0000
+ -- GitHub Service Bot <githubservice@qti.qualcomm.com>  Tue, 25 Aug 2026 05:52:05 +0000
 
 qcom-camera-server (1.0.4-0qcom1) resolute; urgency=medium
 
