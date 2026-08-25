@@ -1,6 +1,6 @@
 usr/lib/*/libqmmf_camera_adaptor.so.*
-usr/lib/*/libqmmf_memory_interface.so.*
-usr/lib/*/libqmmf_recorder_service.so.*
 usr/lib/*/libqmmf_camera_adaptor_kodiak.so.*
+usr/lib/*/libqmmf_memory_interface.so.*
 usr/lib/*/libqmmf_memory_interface_kodiak.so.*
+usr/lib/*/libqmmf_recorder_service.so.*
 usr/lib/*/libqmmf_recorder_service_kodiak.so.*

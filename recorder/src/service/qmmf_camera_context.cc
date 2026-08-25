@@ -1235,7 +1235,7 @@ status_t CameraContext::ConfigImageCapture(const uint32_t image_id,
             break;
           default:
             QMMF_WARN ("%s: Unknown stream usecase %d, treat as default.",
-                __func__, usecase_select.stream_usecase);
+                __func__, static_cast<int>(usecase_select.stream_usecase));
         }
       }
     }
@@ -1270,7 +1270,7 @@ status_t CameraContext::ConfigImageCapture(const uint32_t image_id,
         break;
       default:
         QMMF_ERROR("%s: Invalid color space, colorimetry = %d",
-            __func__, param.colorimetry);
+            __func__, static_cast<int>(param.colorimetry));
         return -EINVAL;  // Return error instead of continuing
     }
 #endif // CAMX_ANDROID_API
@@ -1298,6 +1298,11 @@ status_t CameraContext::ConfigImageCapture(const uint32_t image_id,
       case BufferFormat::kP010:
         // TODO: update below flags once subsystem has supported
         stream_param.allocFlags.flags |= IMemAllocUsage::kPrivateAllocP010;
+        break;
+      case BufferFormat::kP010HEIF:
+        stream_param.allocFlags.flags = (IMemAllocUsage::kPrivateAllocP010HEIF |
+                                         IMemAllocUsage::kHwRender |
+                                         IMemAllocUsage::kHwTexture);
         break;
       case BufferFormat::kTP10UBWC:
         stream_param.allocFlags.flags = (IMemAllocUsage::kPrivateAllocTP10 |
@@ -1517,7 +1522,8 @@ status_t CameraContext::CaptureImage(
                                                         &last_frame_number);
 
     QMMF_INFO("%s: last_frame_number: current=%lld previous=%lld", __func__,
-              last_frame_number, last_frame_number_);
+              static_cast<long long>(last_frame_number),
+              static_cast<long long>(last_frame_number_));
 
     if (last_frame_number != NO_IN_FLIGHT_REPEATING_FRAMES) {
       last_frame_number_ = last_frame_number;
@@ -3034,7 +3040,7 @@ status_t CameraContext::UpdateRequest(bool cached) {
       }
     }
   }
-  QMMF_INFO("%s: SubmitRequest for Num streams(%ld) is successfull"
+  QMMF_INFO("%s: SubmitRequest for Num streams(%ld) is successful"
       " request_id(%d) batches: %ld",  __func__, size, streaming_request_id_,
       streaming_active_requests_.size());
 
@@ -3835,7 +3841,7 @@ CameraPort::CameraPort(const StreamParam& param,
           break;
         default:
           QMMF_WARN ("%s: Unknown stream usecase %d, treat as default.", __func__,
-              usecase_select.stream_usecase);
+              static_cast<int>(usecase_select.stream_usecase));
       }
     }
   }
@@ -3993,7 +3999,7 @@ status_t CameraPort::Init() {
         break;
       default:
         QMMF_ERROR("%s: Invalid video color space, colorimetry = %d",
-            __func__, params_.colorimetry);
+            __func__, static_cast<int>(params_.colorimetry));
         break;
     }
   }

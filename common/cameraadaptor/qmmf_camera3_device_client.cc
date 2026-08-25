@@ -542,16 +542,17 @@ int32_t Camera3DeviceClient::ConfigureStreamsLocked(
   }
 
   // SHDR modes
-  res = session_metadata_.getTagFromName(
-      "org.codeaurora.qcamera3.sessionParameters.SWSHDRType",
-      vtags.get(), &tag_id);
-  if (res == 0) {
-    QMMF_VERBOSE("%s: Setting SWSHDRType to %d\n", __func__, shdr_mode);
-    session_metadata_.update(tag_id, &shdr_mode, 1);
-  } else {
-    QMMF_WARN("%s: Failed to get session parameter SWSHDRType", __func__);
+  if (shdr_mode != 0) {
+    res = session_metadata_.getTagFromName(
+        "org.codeaurora.qcamera3.sessionParameters.SWSHDRType",
+        vtags.get(), &tag_id);
+    if (res == 0) {
+      QMMF_VERBOSE("%s: Setting SWSHDRType to %d\n", __func__, shdr_mode);
+      session_metadata_.update(tag_id, &shdr_mode, 1);
+    } else {
+      QMMF_WARN("%s: Failed to get session parameter SWSHDRType", __func__);
+    }
   }
-
   // SHDR switch
   int32_t shdr_switch = 0;
   if (cam_feature_flags_ & static_cast<uint32_t>(CamFeatureFlag::kSHDRRawSwitch)) {
@@ -1520,7 +1521,7 @@ camera3_buffer_request_status_t Camera3DeviceClient::RequestStreamBuffers(
           QMMF_ERROR("%s: Error: Ivalid state or input ", __func__);
           returned_buf_req->status = CAMERA3_PS_BUF_REQ_STREAM_DISCONNECTED;
         } else if (res == -ENOMEM) {
-          QMMF_ERROR("%s: Error: no availble memory ", __func__);
+          QMMF_ERROR("%s: Error: no available memory ", __func__);
           returned_buf_req->status = CAMERA3_PS_BUF_REQ_NO_BUFFER_AVAILABLE;
         } else {
           QMMF_ERROR("%s: Error: unknown ", __func__);
