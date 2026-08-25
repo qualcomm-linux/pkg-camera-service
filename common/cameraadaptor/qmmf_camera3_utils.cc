@@ -91,7 +91,7 @@ int32_t CameraModule::LoadHwGetModule(HwGetModuleFn *out_fn) {
 
   handle_ = dlopen(lib_name.c_str(), RTLD_NOW);
   if (!handle_) {
-    QMMF_ERROR("%s: dlopen(%s) failed: %s", __func__, lib_name, dlerror());
+    QMMF_ERROR("%s: dlopen(%s) failed: %s", __func__, lib_name.c_str(), dlerror());
     return -EINVAL;
   }
 
@@ -114,7 +114,7 @@ int32_t CameraModule::LoadHwGetModule(HwGetModuleFn *out_fn) {
   }
 
   QMMF_INFO("%s Successfully loaded hw_get_module from %s", __func__,
-            lib_name);
+            lib_name.c_str());
 
   *out_fn = get_module_fn_;
   return 0;
@@ -230,6 +230,7 @@ int32_t Common::FromQmmfToHalFormat(const BufferFormat &format) {
     case BufferFormat::kNV12UBWC:
     case BufferFormat::kNV12:
     case BufferFormat::kP010:
+    case BufferFormat::kP010HEIF:
     case BufferFormat::kTP10UBWC:
     case BufferFormat::kNV12UBWCFLEX:
     case BufferFormat::kNV12FLEX:
@@ -364,6 +365,9 @@ BufferFormat Common::FromImageToQmmfFormat(const ImageFormat& format) {
       break;
     case ImageFormat::kP010:
       return BufferFormat::kP010;
+      break;
+    case ImageFormat::kP010HEIF:
+      return BufferFormat::kP010HEIF;
       break;
     case ImageFormat::kTP10UBWC:
       return BufferFormat::kTP10UBWC;
@@ -1010,6 +1014,7 @@ bool Common::ValidateResolution(const CameraMetadata& meta,
     case BufferFormat::kYUY2:
     case BufferFormat::kUYVY:
     case BufferFormat::kP010:
+    case BufferFormat::kP010HEIF:
     case BufferFormat::kTP10UBWC:
     case BufferFormat::kRGB:
       is_supported = ValidateResFromProcessedSizes(meta, width, height);
